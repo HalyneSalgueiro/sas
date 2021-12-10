@@ -1,0 +1,15 @@
+/*
+* Análise sobre a variável de data da base de cadastro produto
+*/
+
+PROC FREQ
+	data=alura.cadastro_produto_v2;
+	table Data;
+RUN;	
+
+DATA teste1;
+set alura.cadastro_produto_v2;
+
+WHERE data = .;
+
+RUN;
