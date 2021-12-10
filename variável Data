@@ -13,3 +13,12 @@ set alura.cadastro_produto_v2;
 WHERE data = .;
 
 RUN;
+
+DATA teste2;
+set alura.cadastro_produto_v2;
+
+WHERE nome = "Soccer"
+	 or nome = "Forgotten Echo"
+	 or nome = "Fireshock";
+
+RUN;
