@@ -22,3 +22,21 @@ WHERE nome = "Soccer"
 	 or nome = "Fireshock";
 
 RUN;
+
+/*a cima todas as condições estão na mesma variavel, nome igual alguma coisa.
+Mas existe um comando que facilita minha vida, ele diz aonde minha variavel está dentro desse conjunto
+de três nomes de jogos que eu tenho. 
+Substituindo pelo o comando chamado in veja abaixo)*/
+
+DATA teste2;
+set alura.cadastro_produto_v2;
+
+WHERE nome in ("Soccer","Forgotten Echo","Fireshock");
+
+RUN;
+
+PROC FREQ
+	data=teste2;
+	table nome*data
+		/list missing;
+RUN;		
