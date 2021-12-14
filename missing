@@ -1,4 +1,4 @@
-**Pulando bases intermediad**
+#Pulando bases intermediárias
 
 Precisamos listar o nome de todos os jogos que possuem alguma cópia em que a data de lançamento não está preenchida. Na aula usamos um data step para gerar uma base intermediária, onde aplicamos o filtro where data is missing; ou o where data = .;.
 
