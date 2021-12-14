@@ -2,26 +2,33 @@
 * Análise sobre a variável de data da base de cadastro produto
 */
 
+libname alura "/home/u49194826/AluraPlay";
+PROC DATASETS 
+	lib=Alura details;
+RUN;
+
 PROC FREQ
 	data=alura.cadastro_produto_v2;
 	table Data;
-RUN;	
+RUN;		
 
 DATA teste1;
 set alura.cadastro_produto_v2;
 
-WHERE data = .;
+/*O missing é considerada ponto na variavél data, podemos colocar no lugar do missing .;*/
+WHERE data is missing; 
+Run;
 
-RUN;
+/*Com esse código ainda eu preciso procurar na tabela aonde a data está*/
 
 DATA teste2;
 set alura.cadastro_produto_v2;
 
-WHERE nome = "Soccer"
-	 or nome = "Forgotten Echo"
-	 or nome = "Fireshock";
-
-RUN;
+WHERE nome = "Soccer" 
+	or nome = "Forgotten Echo" 
+	or nome = "Fireshock";
+	
+RUN;	
 
 /*a cima todas as condições estão na mesma variavel, nome igual alguma coisa.
 Mas existe um comando que facilita minha vida, ele diz aonde minha variavel está dentro desse conjunto
@@ -40,3 +47,11 @@ PROC FREQ
 	table nome*data
 		/list missing;
 RUN;		
+
+PROC FREQ
+	data=alura.cadastro_produto_v2
+	(where+(nome in("Soccer","Forgotten Echo","Fireshock")));
+	table nome*data
+		/list missing;
+RUN;		
+/*mesmo resultado de antes, sem precisar criar uma base intermediaria*/
