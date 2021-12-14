@@ -1,0 +1,20 @@
+/* Múltiplos condicionais*/
+
+PROC FREQ
+	data=alura.cadastro_produto_v2
+	(where+(nome in("Soccer","Forgotten Echo","Fireshock")));
+	table nome*data
+		/list missing;
+RUN;		
+/*mesmo resultado de antes, sem precisar criar uma base intermediaria*/
+
+DATA teste2;
+set alura.cadastro_produto_v2;
+
+IF data = . THEN DO;
+IF nome = "Fireshock"      THEN data = 201706; ELSE
+IF nome = "Forgotten Echo" THEN data = 201411; ELSE
+IF nome = "Scoccer"        THEN data = 201709; 
+END;
+
+RUN;
