@@ -1,0 +1,27 @@
+**Pulando bases intermediad**
+
+Precisamos listar o nome de todos os jogos que possuem alguma cópia em que a data de lançamento não está preenchida. Na aula usamos um data step para gerar uma base intermediária, onde aplicamos o filtro where data is missing; ou o where data = .;.
+
+Vimos também que podemos pular a criação de bases intermediárias quando queremos apenas gerar alguns relatórios, como um PROC FREQ. Para isso passamos os filtros na hora de declararmos qual é a nossa base de entrada (após o parâmetro data =). Qual dos códigos abaixo gera a listagem que precisamos sem a necessidade de criar uma base intermediária?
+
+Alternativa correta
+PROC FREQ
+    data=alura.cadastro_produto
+        (where=(data = .));
+        
+        
+        PROC FREQ
+    data=alura.cadastro_produto
+        (where=(data = .));
+    table nome;
+RUN;
+
+Correto! Esse filtro funciona inclusive nos parâmetros onde uma base é declarada. Só precisamos lembrar colocar tanto o filtro todo quanto a expressão condicional entre parênteses, e colocar um igual (=) após o where.
+
+PROC FREQ
+    data=alura.cadastro_produto
+        (where=(data is missing));
+    table nome;
+RUN;
+
+Correto! A expressão literal is missing funciona no where inclusive quando usamos nos parâmetros onde uma base é declarada. Só precisamos lembrar colocar tanto o filtro todo quanto a expressão condicional entre parênteses, e colocar um igual (=) após o where.
