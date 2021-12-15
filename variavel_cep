@@ -32,3 +32,19 @@ PROC FREQ
 	data=teste1;
 	table Estado /missing;
 RUN;
+
+PROC CONTENTS data=teste1;RUN;
+
+DATA teste2;
+set alura.cadastro_cliente;
+
+precep = input(substr(cep,1,2),best.);
+RUN;
+
+/*criar uma variavel que vou chamar de precep e ela vai 
+receber um comando sutexto ou substring com os parametros para 
+separar esse subtexto (dentro dos parenteses abaixo)*/
+
+
+
+
