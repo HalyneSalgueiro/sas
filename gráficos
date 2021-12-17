@@ -33,5 +33,11 @@ RUN;
 
 PROC SGPLOT
 	data=alura.cadastro_cliente_v3;
+	vline Estados;
+
+/*gráfico de linhas verticais vline e horizontais hline*/
+
+PROC SGPLOT
+	data=alura.cadastro_cliente_v3;
 	hline Estado;
 RUN;
