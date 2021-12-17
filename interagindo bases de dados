@@ -1,0 +1,35 @@
+/*Declaração da biblioteca da AluraPlay*/
+LIBNAME alura'/home/u49194826/AluraPlay';
+
+PROC DATASETS
+	lib=Alura details;
+RUN;
+
+PROC CONTENTS data=alura.cadastro_cliente_v2;
+RUN;
+
+DATA cad_cli_idade;
+set alura.cadastro_cliente_v2;
+
+data_nascimento=input(nascimento,YYMMDD10.);
+hoje=mdy(12,1,2017);
+
+/*idade=int((hoje-data_nascimento)/365)*/
+/*COMANDOS PRÓPRIOS PARA USAR NO SAS*/
+
+idade1=intck('YEAR', data_nascimento,hoje);
+
+idade2=intck('YEAR', data_nascimento,hoje,'c');
+
+FORMAT data_nascimento DDMMYY10. hoje DDMMYY10.;
+
+if idade1 ~= idade2; 
+Run;
+
+PROC PRINT data=CAD_CLI_IDADE;
+RUN;
+
+/*Year ano em inglês*/
+/*Month mês em inglês*/
+/*Day dia em inglês*/
+/*YYYY-MM-DD formato de data no SAS*/
