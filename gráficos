@@ -1,0 +1,37 @@
+/*Declaração da biblioteca da AluraPlay*/
+LIBNAME alura'/home/u49194826/AluraPlay';
+ 
+PROC DATASETS
+	lib=Alura details;
+RUN; 
+
+/*Criamos as variáveis de Estado e Idade na base de cadastro dos cliente*/
+
+PROC FORMAT;
+	VALUE estados_
+	low-09= "Grande SP"
+	10-19 = "Interior SP"
+	20-28 = "Rio de Janeiro"
+	30-39 = "Minas Gerais"
+	80-87 = "Paraná"
+	OTHER = "Demais Estados";
+RUN;
+
+DATA alura.cadastro_cliente_v3;
+set alura.cadastro_cliente_v2;
+
+Estado = put(input(substr(CEP,1,2),best.),estados_.);
+
+Idade = intck('YEAR',input(Nascimento,YYMMDD10.),mdy(12,1,2017),'c');
+
+RUN;	
+
+PROC FREQ 
+	data=alura.cadastro_cliente_v3;
+	table Estado Idade;
+RUN;
+
+PROC SGPLOT
+	data=alura.cadastro_cliente_v3;
+	hline Estado;
+RUN;
