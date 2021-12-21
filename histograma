@@ -1,0 +1,104 @@
+/*Declaração da biblioteca da AluraPlay*/
+LIBNAME alura'/home/u49194826/AluraPlay';
+ 
+PROC DATASETS 
+	lib=Alura details;
+RUN;
+
+/*Criamos as variáveis ​​de Estado e Idade na base de cadastro do cliente*/
+
+/* GERA OS GRÁFICOS DA ANÁLISE NA BASE DE CADASTRO CLIENTE*/
+
+PROC FORMAT;
+	VALUE estados_
+	low-09 = "Grande SP"
+	10-19 = "Interior SP"
+	20-28 = "Rio de Janeiro"
+	30-39 = "Minas Gerais"
+	80-87 = "Paraná"
+	OTHER = "Demais Estados";
+RUN;
+
+DATA alura.cadastro_cliente_v3;
+set alura.cadastro_cliente_v2;
+
+Estado=put(input(substr(CEP,1,2),best.),estados_.);
+
+Idade=intck('YEAR',input(Nascimento,YYMMDD10.),mdy(12,1,2017),'c');
+
+RUN;	
+/*Gera uma tabela de frequência das variáveis de Estados e Idade*/
+PROC FREQ 
+	data = alura.cadastro_cliente_v3;
+	table Estado Idade;
+RUN;
+
+/*gráfico de linhas verticais vline e horizontais hline*/
+TITLE "Quantidade de cliente por estado";
+PROC SGPLOT
+	data=alura.cadastro_cliente_v3;
+	vline Estado;
+RUN;
+TITLE;
+
+PROC SGPLOT
+	data=alura.cadastro_cliente_v3;
+	hline Estado;
+RUN;
+
+/*gráfico de barras verticais vbar e horizontais hbar*/
+/*mudar a cor do gráfico fillattrs*/
+/*mudar o eixo y do gráfico yaxis*/
+/*valores do eixo y é values ou os valores em intervalo usa o ex:(0 to 35)
+se quiser o intervalo de 5 em 5 é 0 to 35 by 5*/
+/*linhas guias nos valores principais é grid*/
+/*minor são marcadores secundários*/
+/*Titulo é title*/
+
+TITLE "Quantidade de cliente por estado";
+PROC SGPLOT
+	data=alura.cadastro_cliente_v3;
+	vbar Estado / fillattrs=(color=green);
+	yaxis label="Número de clientes"
+	values=(0 to 35 by 5)grid
+	minor minorcount=4;
+	/*title "Quantidade de cliente por estado";*/
+	
+RUN;
+TITLE;
+
+PROC SGPLOT
+	data=alura.cadastro_cliente_v3;
+	hbar Estado;
+RUN;
+/*Plota o gráfico da váriavel Idade*/
+/*Contruindo um histogramas*/
+/*Histograma * Este é um bom tipo de gráfico quando queremos comparar quantidades
+de grandes amostras e/ou variáveis de valores muito dispersos,
+que é o nosso caso.*/
+/*title global fora dos comandos*/
+/*eixo y vertical yasis ** eixo x horizontal xasis */
+/*label escrita da descrição do gráfico*/
+TITLE "Números de clientes por faixas de idades";
+PROC SGPLOT 
+	data=alura.cadastro_cliente_v3;
+	histogram Idade / fillattrs=(color=green);
+	yaxis grid minor minorcount=9 label="Número de clientes";
+	xaxis grid minor minorcount=9 label="Idade(anos)";
+RUN;
+TITLE;	
+
+/*Analise de uma única variavel que se chama univariate, nesse caso foi idade*/
+/*junto com o hidtograma*/
+
+PROC UNIVARIATE
+	data=alura.cadastro_cliente_v3;
+	var Idade;
+	histogram;
+RUN;	
+
+
+
+
+
+
