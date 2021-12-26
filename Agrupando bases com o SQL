@@ -1,0 +1,87 @@
+/*Declaração da biblioteca da AluraPlay*/
+LIBNAME alura'/home/u49194826/AluraPlay';
+
+/*Classificação da variaável de idade*/
+ 
+PROC DATASETS 
+	lib=Alura details;
+RUN;
+
+/*Cria uma variável que classifica a idade em 5 faixa*/
+PROC RANK
+	data=alura.cadastro_cliente_v3
+	out=base_ranks
+	groups=5;
+	var Idade;
+	ranks Faixa_Idade;
+RUN;
+
+PROC FREQ
+	data=base_ranks;
+	table Faixa_Idade;
+RUN;
+
+/*Ordena a base com os ranks*/	
+PROC SORT
+	data=base_ranks;
+	by Faixa_idade;
+RUN;
+	
+/*PROC UNIVARIATE
+	data=base_ranks;
+	var Idade;
+	by Faixa_Idade;
+RUN;	
+*/
+
+/*Miníma Min, Maxima Max, Mean Media, Median Mediana,Mode Moda, 
+STD desvio padrão*/
+/*noprint é para não imprimir*/
+/*output out é para inserir as colunas*/
+/*Para excluir as variável da coluna (drop=_typt_ _FREQ)*/
+
+
+/*PROC MEANS
+	data=base_ranks noprint;
+	var Idade;
+	by Faixa_Idade;
+	output out=base_faixas_idade
+		(drop=_TYPE_ _FREQ_)
+		N=Quantidade
+		MIN=Minimo
+		MAX=Maximo;
+RUN;*/
+
+/*Sumariza a base pelas faixas de idade usando o SUMMARY*/
+
+PROC SUMMARY
+	data=base_ranks;
+	var Idade;
+	by Faixa_Idade;
+	output out=base_faixas_idade
+		(drop=_TYPE_ _FREQ_)
+		N=Quantidade
+		MIN=Minimo
+		MAX=Maximo;
+RUN;	
+
+/*Introdução ao SQL */
+
+PROC SQL;
+	select Faixa_Idade,
+		count(Idade) as Quantidade
+	from base_ranks
+	group by Faixa_Idade
+;QUIT;
+
+/*Agrupando bases com o SQL*/
+/*Sumariza a base pelas faixas de idade usando o SQL*/
+PROC SQL;
+	create table alura.FAIXAS_IDADE as
+	select Faixa_Idade label="Faixas de Idade",
+		count(*) as Quantidade label="Quantidade de clientes",
+		min(Idade) as Minimo label="Minimo da Idade na faixa",
+		max(Idade) as Maximo label="Maximo da Idadde na faixa"
+	from base_ranks
+	group by Faixa_Idade
+;QUIT;
