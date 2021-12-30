@@ -14,7 +14,7 @@ Não tínhamos só uma base de operação, mas várias. Precisamos fazer esses p
 
 Por último, aprendemos o processo de fazer o cruzamento de duas bases usando o recurso de macro variáveis e como fazer uma macro função, em que temos todo o procedimento que depende de um parâmetro, que é passado na chamada do procedimento, e podemos executar diversas vezes, simplificando bastante.
 
-Agora que chegamos no final do curso, não deixe de praticar fazendo os exercícios, não deixe de continuar estudando. Se ficou alguma dúvida, sugestão ou observação, não deixe de usar os fóruns. A Alura tem muitos outros cursos bem interessantes, se você tem interesse em bases de dados, que podem ajudar muito na sua carreira profissional.
+
 
 
 
